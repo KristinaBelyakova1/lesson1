@@ -1,66 +1,66 @@
-const date = new Date()
-
-const daysBlock = document.querySelector('.timer__days')
-const hoursBlock = document.querySelector('.timer__hours')
-const minutesBlock = document.querySelector('.timer__minutes')
-const secondsBlock = document.querySelector('.timer__seconds')
-
-let interval
-
-const numWord = (value, words) => {
-    value = Math.abs(value) % 100
-    const lastNum = value % 10 
-
-    if (value > 10 && value < 20 ) return words[2]
-    if (lastNum > 1 && lastNum < 5 ) return words[1]
-    if (lastNum === 1 ) return words[0]
-
-    return words[2]
-}
-
-const updateTimer = () => {
+const timer = () => {
     const date = new Date()
-    const dateDeadLine = new Date('11 november 2025').getTime()
-    const timeRemaning = (dateDeadLine - date) / 1000
 
-    const days = Math.floor(timeRemaning / 60 / 60 / 24)
-    const hours = Math.floor((timeRemaning / 60 / 60) % 24)
-    const minutes = Math.floor((timeRemaning / 60) % 60)
-    const seconds = Math.floor(timeRemaning % 60)
+    const daysBlock = document.querySelector('.timer__days')
+    const hoursBlock = document.querySelector('.timer__hours')
+    const minutesBlock = document.querySelector('.timer__minutes')
+    const secondsBlock = document.querySelector('.timer__seconds')
 
-    const fdays = days < 10 ? '0' + days : days;
-    const fhours = hours < 10 ? '0' + hours : hours;
-    const fminutes = minutes < 10 ? '0' + minutes : minutes;
-    const fseconds = seconds < 10 ? '0' + seconds : seconds;
+    let interval
 
-    daysBlock.textContent = fdays
-    hoursBlock.textContent = fhours
-    minutesBlock.textContent = fminutes
-    secondsBlock.textContent = fseconds
+    const numWord = (value, words) => {
+        value = Math.abs(value) % 100
+        const lastNum = value % 10
 
-    secondsBlock.nextElementSibling.textContent = numWord(seconds, ['секунда', 'секунды', 'секунд'])
-    minutesBlock.nextElementSibling.textContent = numWord(minutes, ['минута', 'минуты', 'минут'])
-    hoursBlock.nextElementSibling.textContent = numWord(hours, ['час', 'часа', 'часов'])
-    daysBlock.nextElementSibling.textContent = numWord(days, ['день', 'дня', 'дней'])
-    
+        if (value > 10 && value < 20) return words[2]
+        if (lastNum > 1 && lastNum < 5) return words[1]
+        if (lastNum === 1) return words[0]
 
-    if (timeRemaning <= 0) {
-        clearInterval(interval)
-        daysBlock.textContent = '00'
-        hoursBlock.textContent = '00'
-        minutesBlock.textContent = '00'
-        secondsBlock.textContent = '00'
-
-        daysBlock.style.color = 'red'
-        hoursBlock.style.color = 'red'
-        minutesBlock.style.color = 'red'
-        secondsBlock.style.color = 'red'
-
+        return words[2]
     }
+
+    const updateTimer = () => {
+        const date = new Date()
+        const dateDeadLine = new Date('11 november 2025').getTime()
+        const timeRemaning = (dateDeadLine - date) / 1000
+
+        const days = Math.floor(timeRemaning / 60 / 60 / 24)
+        const hours = Math.floor((timeRemaning / 60 / 60) % 24)
+        const minutes = Math.floor((timeRemaning / 60) % 60)
+        const seconds = Math.floor(timeRemaning % 60)
+
+        const fdays = days < 10 ? '0' + days : days;
+        const fhours = hours < 10 ? '0' + hours : hours;
+        const fminutes = minutes < 10 ? '0' + minutes : minutes;
+        const fseconds = seconds < 10 ? '0' + seconds : seconds;
+
+        daysBlock.textContent = fdays
+        hoursBlock.textContent = fhours
+        minutesBlock.textContent = fminutes
+        secondsBlock.textContent = fseconds
+
+        secondsBlock.nextElementSibling.textContent = numWord(seconds, ['секунда', 'секунды', 'секунд'])
+        minutesBlock.nextElementSibling.textContent = numWord(minutes, ['минута', 'минуты', 'минут'])
+        hoursBlock.nextElementSibling.textContent = numWord(hours, ['час', 'часа', 'часов'])
+        daysBlock.nextElementSibling.textContent = numWord(days, ['день', 'дня', 'дней'])
+
+
+        if (timeRemaning <= 0) {
+            clearInterval(interval)
+            daysBlock.textContent = '00'
+            hoursBlock.textContent = '00'
+            minutesBlock.textContent = '00'
+            secondsBlock.textContent = '00'
+
+            daysBlock.style.color = 'red'
+            hoursBlock.style.color = 'red'
+            minutesBlock.style.color = 'red'
+            secondsBlock.style.color = 'red'
+
+        }
+    }
+
+    interval = setInterval(updateTimer, 500)
 }
 
-interval = setInterval(updateTimer, 500)
-
-
-
-
+timer()
